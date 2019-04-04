@@ -10,6 +10,9 @@ class Parceiro(models.Model):
     contato = models.CharField(max_length=60)
     usuario_id = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.razao_social
+
 class TipoAcesso(models.Model):
     nome = models.CharField(max_length=60)
 
