@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+
 class Parceiro(models.Model):
     razao_social = models.CharField(max_length=80)
     nome_fantasia = models.CharField(max_length=80)
@@ -13,14 +15,27 @@ class Parceiro(models.Model):
     def __str__(self):
         return self.razao_social
 
+
 class TipoAcesso(models.Model):
     nome = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.nome
+
 
 class PlanoInternet(models.Model):
     nome = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.nome
+
+
 class VelocidadeInternet(models.Model):
     nome = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.nome
+
 
 class Solicitacao(models.Model):
     tipo_acesso_id = models.ForeignKey(TipoAcesso, on_delete=models.PROTECT)
@@ -35,3 +50,5 @@ class Solicitacao(models.Model):
     velocidades_internet = models.ManyToManyField(VelocidadeInternet)
     usuario_id = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return "Solicitação "+self.pk
