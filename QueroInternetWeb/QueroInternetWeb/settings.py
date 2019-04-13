@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'bootstrap4',
+    'bootstrapform',
     'admin_interface',
     'colorfield',
     'main.apps.MainConfig',
