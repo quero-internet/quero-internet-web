@@ -1,0 +1,30 @@
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registrar</title>
+</head>
+<body>
+    <h1> Registrar Usuário </h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="card d-flex justify-content-center">
+                <div class="card-body">
+                    {{ form.as_p | bootstrap_horizontal }}
+                    <button class="btn btn-success" type="submit">Registrar</button>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</body>
+</html>
