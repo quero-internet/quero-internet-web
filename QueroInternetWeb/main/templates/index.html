@@ -1,21 +1,44 @@
+{% extends 'base.html' %}
 
-{% load staticfiles %}
-{% load bootstrap4 %}
+{% block content %}
 
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
+<table class="table table-responsive-sm">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Tipo de acesso</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for solicitacao in solicitacoes %}
+        <tr>
+            <td>{{solicitacao.pk}}</td>
+            <td>{{solicitacao.tipo_acesso}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <div class="pagination">
+            <span class="step-links">
+                {% if solicitacoes.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ solicitacoes.previous_page_number }}">previous</a>
+                {% endif %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Main</title>
-</head>
-<body>
-    <h1>Main</h1>
-        <button>Teste</button>
-</body>
-</html>
+                <span class="current">
+                    Page {{ solicitacoes.number }} of {{ solicitacoes.paginator.num_pages }}.
+                </span>
+
+                {% if solicitacoes.has_next %}
+                <a href="?page={{ solicitacoes.next_page_number }}">next</a>
+                <a href="?page={{ solicitacoes.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </tfoot>
+</table>
+
+
+
+
+{% endblock %}

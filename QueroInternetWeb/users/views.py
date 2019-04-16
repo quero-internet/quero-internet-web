@@ -3,6 +3,7 @@ from . import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as loginUser
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def register(request):
@@ -30,6 +31,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             loginUser(request, user)
-            return redirect("/main")            
+            return redirect("/home")            
         else:            
-            return User.DoesNotExis
+            messages.error(request,'Usuário ou senha incorretos!')
+            return redirect('login')

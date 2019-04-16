@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registrar</title>
+    <title>Quero internet! - Login</title>
 </head>
 
 <body>
@@ -22,7 +22,12 @@
                 <div class="col d-flex justify-content-center">
                     <div class="card">
                         <div class="card-body">
-                            {% bootstrap_form_errors form %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger">
+                                <a class="close" href="#" data-dismiss="alert">×</a>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
                             {% csrf_token %}
                             {% bootstrap_form form %}
                             <div class="d-flex justify-content-center">
