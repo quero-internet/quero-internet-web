@@ -24,6 +24,6 @@ class SolicitacaoAdmin(admin.ModelAdmin):
             'fields': ['velocidades_internet']
         }),
         ('Etapa 3', {
-            'fields': ['cep', 'logradouro', 'numero', 'complemento', 'bairro', 'uf', 'cidade']
+            'fields': ['cep', 'logradouro', 'numero', 'complemento', 'bairro', 'uf', 'cidade','usuario']
         }),
     ]
