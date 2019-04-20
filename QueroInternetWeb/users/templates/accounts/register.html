@@ -11,29 +11,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quero internet! - Login</title>
+    <title>Quero internet! - Registrar</title>
 </head>
 
 <body>
-    <h1 class="text-center mb-3"> Fazer login </h1>
+    <h1 class="text-center mb-3"> Registrar Usuário </h1>
     <form method="post">
         <div class="container">
             <div class="row">
                 <div class="col d-flex justify-content-center">
                     <div class="card">
                         <div class="card-body">
-                            {% for message in messages %}
-                            <div class="alert alert-danger">
-                                <a class="close" href="#" data-dismiss="alert">×</a>
-                                {{ message }}
-                            </div>
-                            {% endfor %}
                             {% csrf_token %}
                             {% bootstrap_form form %}
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-success align-center" type="submit">Login</button>
+                                
+                                <button class="btn btn-success align-center ml-3" type="submit">Registrar</button>
                             </div>
-                             <p class="text-center mt-2">Não tem uma conta? <a href="/usuarios/register"><strong>CADASTRE-SE</strong></a></p>
+                            <p class="text-center mt-2">Já tem uma conta? <a href="{% url 'accounts:login' %}"><strong>ENTRE</strong></a></p>
                         </div>
                     </div>
                 </div>

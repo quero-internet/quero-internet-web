@@ -10,20 +10,20 @@ def register(request):
     if(request.method == 'GET'):
         form = forms.RegistrationForm()
         context = {'form': form}
-        return render(request, 'register.html', context)
+        return render(request, 'accounts/register.html', context)
     else:
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login/')
         else:
-            return render_to_response('register.html', {'form':form})
+            return render_to_response('accounts/register.html', {'form':form})
 
 def login(request):
     if(request.method == 'GET'):
         form = AuthenticationForm()
         context = {'form': form}
-        return render(request, 'login.html', context)
+        return render(request, 'accounts/login.html', context)
     else:        
         form = AuthenticationForm(request.POST)
         username = request.POST['username']
@@ -34,4 +34,4 @@ def login(request):
             return redirect("/home")            
         else:            
             messages.error(request,'Usuário ou senha incorretos!')
-            return redirect('login')
+            return redirect('/accounts/login/')

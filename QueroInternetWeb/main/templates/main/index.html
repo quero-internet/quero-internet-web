@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-success" href="{%url 'main:novo'%}">Nova solicitação</a>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <table class="table table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo de acesso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for solicitacao in solicitacoes %}
+                    <tr>
+                        <td>{{solicitacao.pk}}</td>
+                        <td>{{solicitacao.tipo_acesso}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <ul class="pagination">
+                {% if solicitacoes.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">Primeiro</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ solicitacoes.previous_page_number }}">
+                        &laquo;</a>
+                </li>
+                {% endif %}
+
+                {% for page in num_pages %}
+                <li class="page-item"><a href="?page={{page}}" class="page-link">{{page}}</a></li>
+                {% endfor %}
+
+                {% if solicitacoes.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ solicitacoes.next_page_number }}">&raquo;</a>
+                </li>
+                <a href="?page={{ solicitacoes.paginator.num_pages }}">Último</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
