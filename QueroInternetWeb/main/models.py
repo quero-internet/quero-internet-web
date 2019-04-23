@@ -55,10 +55,10 @@ class Solicitacao(models.Model):
         verbose_name_plural = "Solicitações"
 
     tipo_acesso = models.ForeignKey(TipoAcesso, on_delete=models.PROTECT, verbose_name="Tipo de acesso")
-    cep = models.CharField(max_length=8, verbose_name="CEP")
+    cep = models.CharField(max_length=9, verbose_name="CEP")
     logradouro = models.CharField(max_length=60)
     numero = models.CharField(max_length=10, verbose_name="Número")
-    complemento = models.CharField(max_length=60)
+    complemento = models.CharField(max_length=60, null=True, blank=True)
     bairro = models.CharField(max_length=60)
     cidade = models.CharField(max_length=60)
     uf = models.CharField(max_length=2, verbose_name="UF")

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -15,7 +16,7 @@ class Home(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(Home, self).get_context_data(*args, **kwargs)
-        paginator = Paginator(Solicitacao.objects.all(), 10)
+        paginator = Paginator(Solicitacao.objects.filter(usuario__pk = self.request.user.pk), 10)
         page = self.request.GET.get('page')
         solicitacoes = paginator.get_page(page)
 
@@ -36,3 +37,9 @@ class SolicitacaoForm(CreateView):
     model = Solicitacao
     fields = ['tipo_acesso', 'planos_internet', 'velocidades_internet',
               'cep', 'logradouro', 'numero', 'complemento', 'bairro', 'uf', 'cidade']
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.usuario = self.request.user
+        self.object.save()
+        return redirect("/")

@@ -31,7 +31,7 @@ def login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             loginUser(request, user)
-            return redirect("/home")            
+            return redirect("/")            
         else:            
             messages.error(request,'Usuário ou senha incorretos!')
             return redirect('/accounts/login/')
