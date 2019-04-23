@@ -1,19 +1,21 @@
 {% extends 'main/base.html' %}
 {% block content %}
 
-<div class="container-fluid mt-3">
+<div class="container">
     <div class="row">
         <div class="col">
-            <a class="btn btn-success" href="{%url 'main:novo'%}">Nova solicitação</a>
+            <a class="btn btn-success mt-3" href="{%url 'main:novo'%}">Nova solicitação</a>
         </div>
     </div>
     <div class="row mt-2">
         <div class="col">
-            <table class="table table-responsive-sm">
+            <table class="table table-responsive-sm  table-responsive-md table table-hover">
                 <thead>
                     <tr>
-                        <th>Número</th>
-                        <th>Tipo de acesso</th>
+                        <th>Nº</th>
+                        <th>Acesso</th>
+                        <th>Data</th>
+                        <th>Obs:</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +23,8 @@
                     <tr>
                         <td>{{solicitacao.pk}}</td>
                         <td>{{solicitacao.tipo_acesso}}</td>
+                        <td>{{"........"}}</td>
+                        <td>{{"........"}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -44,7 +48,7 @@
                 {% if solicitacoes.has_next %}
                 <li class="page-item"><a class="page-link" href="?page={{ solicitacoes.next_page_number }}">&raquo;</a>
                 </li>
-                <a href="?page={{ solicitacoes.paginator.num_pages }}">Último</a>
+                <a class="mt-2" href="?page={{ solicitacoes.paginator.num_pages }}">Último</a>
                 {% endif %}
             </ul>
         </div>
