@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 
 # Create your models here.
 
@@ -65,6 +66,8 @@ class Solicitacao(models.Model):
     planos_internet = models.ManyToManyField(PlanoInternet, verbose_name="Planos de internet")
     velocidades_internet = models.ManyToManyField(VelocidadeInternet, verbose_name="Velocidades de internet")
     usuario = models.ForeignKey(User, on_delete=models.PROTECT)
+    data_e_hora = models.DateTimeField(auto_now_add=True)
+    observacoes = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return "Solicitação "+ str(self.pk)
