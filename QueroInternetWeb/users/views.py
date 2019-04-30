@@ -3,7 +3,9 @@ from . import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as loginUser
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 from django.contrib import messages
+from django.conf import settings
 
 # Create your views here.
 def register(request):
@@ -35,3 +37,7 @@ def login(request):
         else:            
             messages.error(request,'Usuário ou senha incorretos!')
             return redirect('/accounts/login/')
+        
+def logout_view(request):
+    logout(request)
+    return redirect(settings.LOGIN_URL)

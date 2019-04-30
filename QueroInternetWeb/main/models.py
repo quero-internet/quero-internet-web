@@ -67,7 +67,7 @@ class Solicitacao(models.Model):
     velocidades_internet = models.ManyToManyField(VelocidadeInternet, verbose_name="Velocidades de internet")
     usuario = models.ForeignKey(User, on_delete=models.PROTECT)
     data_e_hora = models.DateTimeField(auto_now_add=True)
-    observacoes = models.CharField(max_length=300, blank=True, null=True)
+    observacoes = models.CharField(verbose_name="Observações",max_length=300, blank=True, null=True)
 
     def __str__(self):
         return "Solicitação "+ str(self.pk)
