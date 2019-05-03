@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'admin_interface',
     'colorfield',
     'main.apps.MainConfig',
+    'dashboard.apps.DashboardConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',

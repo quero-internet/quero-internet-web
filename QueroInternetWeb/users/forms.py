@@ -5,10 +5,11 @@ from django.contrib.auth.forms import UserCreationForm
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
+    is_staff = forms.BooleanField(label="Desejo ser um parceiro.")
 
     class Meta:
         model = User
-        fields = ('username','first_name','last_name', 'email', 'password1', 'password2' )
+        fields = ('username','first_name','last_name', 'email', 'password1', 'password2', 'is_staff' )
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)

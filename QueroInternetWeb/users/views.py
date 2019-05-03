@@ -17,7 +17,7 @@ def register(request):
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login/')
+            return redirect('accounts:login')
         else:
             return render_to_response('accounts/register.html', {'form':form})
 
@@ -36,7 +36,7 @@ def login(request):
             return redirect("/")            
         else:            
             messages.error(request,'Usuário ou senha incorretos!')
-            return redirect('/accounts/login/')
+            return redirect('accounts:login')
         
 def logout_view(request):
     logout(request)

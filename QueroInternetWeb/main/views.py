@@ -28,6 +28,7 @@ class Home(TemplateView):
         context['solicitacoes'] = solicitacoes
         context['num_pages'] = num_pages
         context['username'] = self.request.user
+        context['is_staff'] = self.request.user.is_staff
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -62,7 +63,7 @@ class SolicitacaoForm(CreateView):
         self.object = form.save(commit=False)
         self.object.usuario = self.request.user
         self.object.save()
-        return redirect("/")
+        return redirect("main:home")
     
     def get_context_data(self, **kwargs):
         context = super(SolicitacaoForm, self).get_context_data(**kwargs)
