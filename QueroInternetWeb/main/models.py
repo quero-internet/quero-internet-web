@@ -14,7 +14,7 @@ class Parceiro(models.Model):
     cnpj = models.CharField(max_length=14, verbose_name="CNPJ")
     inscricao_estadual = models.CharField(max_length=14, verbose_name="Inscrição estadual")
     contato = models.CharField(max_length=60)
-    usuario = models.ForeignKey(User, on_delete=models.PROTECT)
+    usuario = models.OneToOneField(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.razao_social
@@ -68,6 +68,17 @@ class Solicitacao(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.PROTECT)
     data_e_hora = models.DateTimeField(auto_now_add=True)
     observacoes = models.CharField(verbose_name="Observações",max_length=300, blank=True, null=True)
-
+    
     def __str__(self):
         return "Solicitação "+ str(self.pk)
+
+class Resposta(models.Model):
+    class Meta:
+        verbose_name = "Resposta"
+        verbose_name_plural = "Respostas"
+
+    resposta = models.CharField(max_length=300)
+    valor_implantacao = models.DecimalField(max_digits=10,decimal_places=2, verbose_name="Valor de implantação",null=True)
+    valor_mensalidade = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Valor de mensalidade", null=True)
+    usuario = models.ForeignKey(User, on_delete=models.PROTECT)
+    solicitacao = models.ForeignKey(Solicitacao, on_delete=models.PROTECT, related_name='respostas')

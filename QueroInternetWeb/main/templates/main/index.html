@@ -2,29 +2,31 @@
 {% block content %}
 
 <div class="container">
+    {% if user.is_staff is False %}
     <div class="row">
         <div class="col">
-            <a class="btn btn-success mt-3" href="{%url 'main:novo'%}">Nova solicitação</a>
+            <a class="btn btn-success mt-3" href="{%url 'main:solicitacao-novo'%}">Nova solicitação</a>
         </div>
     </div>
+    {% endif %}
     <div class="row mt-2">
         <div class="col">
-            <table class="table table-responsive-sm  table-responsive-md table table-hover">
+            <table class="table table-responsive-sm table_bordered table-responsive-md table table-hover">
                 <thead>
                     <tr>
                         <th>Nº</th>
                         <th>Acesso</th>
                         <th>Data</th>
-                        <th>Obs:</th>
+                        <th>Localidade</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for solicitacao in solicitacoes %}
-                    <tr>
+                    <tr onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
                         <td>{{solicitacao.pk}}</td>
                         <td>{{solicitacao.tipo_acesso}}</td>
-                        <td>{{solicitacao.data_e_hora}}</td>
-                        <td>{{solicitacao.observacoes}}</td>
+                        <td>{{solicitacao.data_e_hora | date:"d/m/Y H:i"}}</td>
+                        <td>{{solicitacao.cidade}} - {{solicitacao.uf}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -54,5 +56,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    function redirecionarParaDetalhes(id) {
+        let url = `{% url 'main:solicitacao-detalhes' 0 %}`;
+        window.location.href =  url.replace('0', id)
+    }
+</script>
 {% endblock %}
