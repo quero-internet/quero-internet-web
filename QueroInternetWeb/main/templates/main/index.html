@@ -22,7 +22,7 @@
                 </thead>
                 <tbody>
                     {% for solicitacao in solicitacoes %}
-                    <tr onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
+                    <tr style="cursor:pointer;" onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
                         <td>{{solicitacao.pk}}</td>
                         <td>{{solicitacao.tipo_acesso}}</td>
                         <td>{{solicitacao.data_e_hora | date:"d/m/Y H:i"}}</td>

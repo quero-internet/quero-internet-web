@@ -49,7 +49,7 @@ class Parceiros(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(Parceiros, self).get_context_data(*args, **kwargs)
-        paginator = Paginator(Parceiro.objects.filter(usuario__pk = self.request.user.pk), 10)
+        paginator = Paginator(Parceiro.objects.all(), 10)
         page = self.request.GET.get('page')
         parceiros = paginator.get_page(page)
 
@@ -130,6 +130,28 @@ class SolicitacaoEditarResposta(UpdateView):
 
         self.object.save()
         return redirect('main:solicitacao-detalhes', pk=self.object.solicitacao.pk)
+        
+@method_decorator(login_required, name='dispatch')
+class SolicitacaoSelecionarParceiro(UpdateView):
+    template_name = 'main/solicitacao-selecionar-parceiro.html'
+    model = Solicitacao
+    fields = []
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        if(self.object.usuario.pk != self.request.user.pk):
+            raise PermissionDenied("Você não tem permissão para editar esse registro!")
+
+        return ctx
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        parceiro_id = self.kwargs['parceiroId']
+        self.object.parceiro_escolhido = get_object_or_404(Parceiro,pk=parceiro_id)
+
+        self.object.save()
+        return redirect('main:solicitacao-detalhes', pk=self.object.pk)
         
 @method_decorator(staff_member_required, name='dispatch')
 @method_decorator(login_required, name='dispatch')

@@ -8,6 +8,7 @@ urlpatterns = [
     path('solicitacao/<int:pk>/criar-resposta', views.SolicitacaoCriarResposta.as_view(), name='solicitacao-criar-resposta'),
     path('solicitacao/editar-resposta/<int:pk>', views.SolicitacaoEditarResposta.as_view(), name='solicitacao-editar-resposta'),
     path('solicitacao/excluir-resposta/<int:pk>', views.SolicitacaoDeletarResposta.as_view(), name='solicitacao-excluir-resposta'),
+    path('solicitacao/<int:pk>/selecionar-parceiro/<int:parceiroId>', views.SolicitacaoSelecionarParceiro.as_view(), name='solicitacao-selecionar-parceiro'),
     path('parceiros/', views.Parceiros.as_view(), name='parceiros'),
     path('solicitacao/novo/', views.SolicitacaoForm.as_view(), name='solicitacao-novo')
 ]

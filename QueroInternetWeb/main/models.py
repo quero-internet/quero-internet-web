@@ -15,6 +15,7 @@ class Parceiro(models.Model):
     inscricao_estadual = models.CharField(max_length=14, verbose_name="Inscrição estadual")
     contato = models.CharField(max_length=60)
     usuario = models.OneToOneField(User, on_delete=models.PROTECT)
+    inativo = models.BooleanField(verbose_name="Inativo", default=False)
 
     def __str__(self):
         return self.razao_social
@@ -68,6 +69,7 @@ class Solicitacao(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.PROTECT)
     data_e_hora = models.DateTimeField(auto_now_add=True)
     observacoes = models.CharField(verbose_name="Observações",max_length=300, blank=True, null=True)
+    parceiro_escolhido = models.ForeignKey(Parceiro, on_delete=models.PROTECT, null=True)
     
     def __str__(self):
         return "Solicitação "+ str(self.pk)
