@@ -15,23 +15,20 @@
     <title>Quero internet! - Registrar</title>
 </head>
 
-<body>
-    
-    <h2 class="text-center my-3"> Registrar novo usuário </h2>
-    <hr/>
+<body class="bg-register">
     <form method="post">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col d-flex justify-content-center">
+                <div class="col d-flex justify-content-end mt-5 ml-3">
                     <div class="card">
                         <div class="card-body">
                             {% csrf_token %}
-                            {% bootstrap_form form %}
+                            {% bootstrap_field form.password1 %}
                             <div class="d-flex justify-content-center">
-                                
                                 <button class="btn btn-success align-center ml-3" type="submit">Registrar</button>
                             </div>
-                            <p class="text-center mt-2">Já tem uma conta? <a href="{% url 'accounts:login' %}"><strong>ENTRE</strong></a></p>
+                            <p class="text-center mt-2">Já tem uma conta? <a
+                                    href="{% url 'accounts:login' %}"><strong>ENTRE</strong></a></p>
                         </div>
                     </div>
                 </div>
@@ -39,7 +36,11 @@
         </div>
 
     </form>
-   
+
+    {% comment %} <h2 class="text-center my-3"> Registrar novo usuário </h2> {% endcomment %}
+
+
+
 </body>
 
 </html>

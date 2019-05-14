@@ -6,6 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     is_staff = forms.BooleanField(label="Desejo ser um parceiro.")
+    username = forms.CharField(label = "Nome de usuario")
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+
 
     class Meta:
         model = User
