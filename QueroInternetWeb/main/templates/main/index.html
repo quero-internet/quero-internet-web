@@ -15,6 +15,11 @@
                 <thead>
                     <tr>
                         <th>Nº</th>
+                        {% if user.is_staff %}
+                            <th>
+                                Solicitante
+                            </th>
+                        {% endif %}
                         <th>Acesso</th>
                         <th>Data</th>
                         <th>Localidade</th>
@@ -24,6 +29,11 @@
                     {% for solicitacao in solicitacoes %}
                     <tr style="cursor:pointer;" onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
                         <td>{{solicitacao.pk}}</td>
+                        {% if user.is_staff %}
+                            <td>
+                                {{solicitacao.usuario.first_name}} {{solicitacao.usuario.last_name}}
+                            </td>
+                        {% endif %}
                         <td>{{solicitacao.tipo_acesso}}</td>
                         <td>{{solicitacao.data_e_hora | date:"d/m/Y H:i"}}</td>
                         <td>{{solicitacao.cidade}} - {{solicitacao.uf}}</td>

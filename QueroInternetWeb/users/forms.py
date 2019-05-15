@@ -7,8 +7,8 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     is_staff = forms.BooleanField(label="Desejo ser um parceiro.", required=False)
     username = forms.CharField(label = "Nome de usuario")
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password1 = forms.CharField(widget=forms.PasswordInput, label="Senha")
+    password2 = forms.CharField(widget=forms.PasswordInput, label="Senha (Repita a senha)")
 
 
     class Meta:

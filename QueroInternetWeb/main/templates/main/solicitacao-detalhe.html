@@ -106,7 +106,7 @@
                                 <div class="col">
                                     {% if object.parceiro_escolhido %}
                                         <div class="alert alert-success">
-                                            O parceiro {{object.parceiro_escolhido}} foi escolhido pelo solicitante.
+                                            <strong>O parceiro {{object.parceiro_escolhido}} foi escolhido pelo solicitante.</strong>
                                         </div>
                                     {% endif %}
                                     <table class="my-3 table table-responsive table-striped">
@@ -132,7 +132,7 @@
                                                         class="btn btn-sm btn-danger m-1">Excluir</a>
                                                     {% endif %}
                                                     {% if not user.is_staff and object.usuario.pk == user.pk and not object.parceiro_escolhido%}
-                                                    <a href="{% url 'main:solicitacao-selecionar-parceiro' object.pk resposta.usuario.parceiro.pk %}"
+                                                    <a href="{% url 'main:solicitacao-selecionar-parceiro' object.pk resposta.pk %}"
                                                         class="btn btn-sm btn-success m-1">Aceitar proposta</a>
                                                     {% endif %}
                                                 </td>

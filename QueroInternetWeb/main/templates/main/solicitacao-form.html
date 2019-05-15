@@ -93,6 +93,7 @@
     var cepField = document.getElementsByName("cep")[0];
     async function definirBuscaDeCep() {
         let cep = cepField.value;
+        
 
         cep = cep.replace("-","")
 
@@ -107,9 +108,9 @@
             cepField.value = ""
             return
         }
-
+    debugger
         try {
-            let obj = await (await fetch("https://viacep.com.br/ws/76988070/json/")).json()
+            let obj = await (await fetch(`https://viacep.com.br/ws/${cep}/json/`)).json()
             setFormValues(obj)
         } catch (error) {
             return

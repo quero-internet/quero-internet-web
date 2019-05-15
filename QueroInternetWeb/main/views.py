@@ -143,13 +143,14 @@ class SolicitacaoSelecionarParceiro(UpdateView):
         if(self.object.usuario.pk != self.request.user.pk):
             raise PermissionDenied("Você não tem permissão para editar esse registro!")
 
+        ctx['resposta'] = get_object_or_404(Resposta, pk=self.kwargs['respostaId'])
         return ctx
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        parceiro_id = self.kwargs['parceiroId']
-        self.object.parceiro_escolhido = get_object_or_404(Parceiro,pk=parceiro_id)
+        resposta = get_object_or_404(Resposta, pk=self.kwargs['respostaId'])
 
+        self.object.parceiro_escolhido = get_object_or_404(Parceiro, pk=resposta.usuario.parceiro.pk)
         self.object.save()
         return redirect('main:solicitacao-detalhes', pk=self.object.pk)
         
