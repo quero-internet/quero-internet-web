@@ -93,7 +93,7 @@
                             </table>
                         </div>
                         <div class="col">
-                            {% if user.is_staff %}
+                            {% if user.is_staff and not object.parceiro_escolhido %}
                             <div class="row">
                                 <div class="col"><a class="btn btn-info"
                                         href="{% url 'main:solicitacao-criar-resposta' object.pk %}">

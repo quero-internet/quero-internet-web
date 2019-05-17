@@ -48,7 +48,7 @@ class Dashboard(TemplateView):
     def get_quantitativo_respondido_data(self):
         respondido = Solicitacao.objects.filter(respostas__isnull = False).count()
         respondido_convertido = Solicitacao.objects.filter(respostas__isnull = False, parceiro_escolhido__pk=self.request.user.parceiro.pk).count()
-        nao_respondido = Solicitacao.objects.filter(respostas__isnull = True).count()
+        nao_respondido = Solicitacao.objects.filter(usuario__pk=self.request.user.pk,respostas__isnull = True).count()
         
         return json.dumps([nao_respondido, respondido, respondido_convertido])
 

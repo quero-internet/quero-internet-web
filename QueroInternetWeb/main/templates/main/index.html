@@ -64,7 +64,9 @@
                 {% if solicitacoes.has_next %}
                 <li class="page-item"><a class="page-link" href="?page={{ solicitacoes.next_page_number }}">&raquo;</a>
                 </li>
-                <a class="mt-2" href="?page={{ solicitacoes.paginator.num_pages }}">Último</a>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ solicitacoes.paginator.num_pages }}">Último</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
