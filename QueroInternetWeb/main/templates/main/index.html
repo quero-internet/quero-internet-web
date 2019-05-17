@@ -27,7 +27,11 @@
                 </thead>
                 <tbody>
                     {% for solicitacao in solicitacoes %}
-                    <tr style="cursor:pointer;" onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
+                        {% if solicitacao.parceiro_escolhido %}
+                            <tr class="table-success" style="cursor:pointer;" onclick="redirecionarParaDetalhes({{solicitacao.pk}})">
+                        {% else %}
+                            <tr style="cursor:pointer;" onclick="redirecionarParaDetalhes({{solicitacao.pk}})">                
+                        {% endif %}
                         <td>{{solicitacao.pk}}</td>
                         {% if user.is_staff %}
                             <td>

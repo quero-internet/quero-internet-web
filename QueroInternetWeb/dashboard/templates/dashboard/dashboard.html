@@ -2,26 +2,136 @@
 {% block content %}
 <div class="container mt-2">
     <div class="row">
-        <div class="card-columns">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Solicitações no mês</h5>  
-                    <h1>{{solicitacoesMes}}</h1>
+        <div class="col">
+            <div class="card-columns">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Solicitações no mês</h5>
+                        <h1>{{solicitacoesMes}}</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5>Solicitações no dia</h5>  
-                    <h1>{{solicitacoesHoje}}</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Solicitações no dia</h5>
+                        <h1>{{solicitacoesHoje}}</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5>Solicitações no ano</h5>  
-                    <h1>{{solicitacoesAno}}</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Solicitações no ano</h5>
+                        <h1>{{solicitacoesAno}}</h1>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4 col-sm-12">
+            <!-- <div class="d-flex justify-content-start"> -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>Solicitações por situação</h2>
+                    </div>
+                    <canvas id="chart-quantitativo-por-situacao" width="100" height="100"></canvas>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <div class="col-lg-4 col-sm-12">
+            <!-- <div class="d-flex justify-content-end"> -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>N° de conversões por data</h2>
+                    </div>
+                    <canvas id="quantitativo-conversoes-por-data" width="100" height="100"></canvas>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <div class="col-lg-4 col-sm-12">
+                <div class="d-flex justify-content-end">
+                    <div class="card h-75">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h2>Solicitações por respostas</h2>
+                            </div>
+                            <canvas id="chart-quantitativo-respondido" width="100" height="100"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-start">
+                <div class="card w-75">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2>Solicitações por situação</h2>
+                        </div>
+                        <!-- <canvas id="chart-quantitativo-por-situacao" width="100" height="100"></canvas> -->
+                        FALTA UM GRÁFICO
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<script>
+    var ctxQuantitativoPorSituacao = document.getElementById('chart-quantitativo-por-situacao').getContext('2d');
+    var ctxQuantitativoRespondido = document.getElementById('chart-quantitativo-respondido').getContext('2d');
+    var ctxquantitativoConversoesPorData = document.getElementById('quantitativo-conversoes-por-data').getContext('2d');
+
+    var chartQuantitativoPorSituacao = new Chart(ctxQuantitativoPorSituacao, {
+        type: 'doughnut',
+        data: {
+            labels: ["Abertas", "Fechadas"],
+            datasets: [{
+                data: {{ quantitativo_por_situacao_data }},
+        backgroundColor: [
+            '#F44336',
+            '#4CAF50'
+        ]
+    }]
+        }
+    })
+
+    var chartQuantitativoRespondido = new Chart(ctxQuantitativoRespondido, {
+        type: 'polarArea',
+        data: {
+            labels: ["Não respondidas", "Respondidas", "Respondidas e convertidas"],
+            datasets: [{
+                data: {{ quantitativo_respondido_data }},
+        backgroundColor: [
+            '#FF9800',
+            '#3F51B5',
+            '#4CAF50'
+        ]
+    }]
+        }
+    })
+
+    var arrayQuantitativoConversoesPorData = JSON.parse(`{{quantitativo_conversoes_por_data}}`.replace(/&quot;/g, `"`))
+    var chartQuantitativoConversoesPorData = new Chart(ctxquantitativoConversoesPorData, {
+        type: 'line',
+        data: {
+            labels: arrayQuantitativoConversoesPorData.map(item => {
+                let arrayData = item.data_e_hora.split("-");
+
+                return `${arrayData[2]}/${arrayData[1]}/${arrayData[0]}`
+            }),
+            datasets: [{
+                label: "Número de conversões no dia",
+                data: arrayQuantitativoConversoesPorData.map(item => item.pk__count),
+                backgroundColor: [
+                    '#4CAF50'
+                ]
+            }]
+        }
+    })
+</script>
 {% endblock %}
