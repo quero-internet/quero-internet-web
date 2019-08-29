@@ -1,0 +1,23 @@
+h1 {
+    color:#000000;
+}
+body, html {
+    height: 100%;}
+
+.bg-login{
+    background-image: url('../img/smile_phone.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .ftsize{
+      font-size: 250%;
+  }
+  .bg-register{
+    background-image: url('../img/teste3.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

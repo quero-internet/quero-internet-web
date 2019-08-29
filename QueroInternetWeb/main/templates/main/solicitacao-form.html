@@ -1,0 +1,137 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block content %}
+<div class="">
+    <h2 class="text-center mb-3 mt-2"> Nova solicitação </h2>
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <!-- Card 1 -->
+                            <div class="card my-2">
+                                <div class="card-header">
+                                    <h3>Etapa 1</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-12">
+                                            {% bootstrap_field form.tipo_acesso  %}</div>
+                                        <div class="col-lg-8 col-sm-12">
+                                            {% bootstrap_field form.planos_internet  %}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="card my-2">
+                                <div class="card-header">
+                                    <h3>Etapa 2</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12">
+                                            {% bootstrap_field form.velocidades_internet  %}
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            {% bootstrap_field form.observacoes  %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="card my-2">
+                                <div class="card-header">
+                                    <h3>Etapa 3</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12">
+                                            <small class="text-secondary">(Digite o CEP para auto-preencher o
+                                                endereço)</small>
+                                            {% bootstrap_field form.cep  %}
+                                        </div>
+
+                                        <div class="col-lg-8 col-sm-12">
+                                            {% bootstrap_field form.logradouro  %}</div>
+                                        <div class="col-lg-4 col-sm-12">
+                                            {% bootstrap_field form.numero  %}</div>
+
+                                        <div class="col-lg-6 col-sm-12">
+                                            {% bootstrap_field form.bairro  %}</div>
+                                        <div class="col-lg-2 col-sm-12">
+                                            {% bootstrap_field form.uf  %}</div>
+                                        <div class="col-lg-4 col-sm-12">
+                                            {% bootstrap_field form.cidade  %}</div>
+
+                                        <div class="col-lg-6 col-sm-12">
+                                            {% bootstrap_field form.complemento  %}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center my-3">
+                                <button class="btn btn-success align-center ml-3" type="submit">Salvar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script async>
+    var cepField = document.getElementsByName("cep")[0];
+    async function definirBuscaDeCep() {
+        let cep = cepField.value;
+        
+
+        cep = cep.replace("-","")
+
+        if (cep.length < 8) {
+            return;
+        }
+
+        let regexSemTraco = new RegExp(/([0-9]{8})/)
+
+        if (!regexSemTraco.test(cep)) {
+            alert("O CEP digitado é inválido!");
+            cepField.value = ""
+            return
+        }
+    debugger
+        try {
+            let obj = await (await fetch(`https://viacep.com.br/ws/${cep}/json/`)).json()
+            setFormValues(obj)
+        } catch (error) {
+            return
+        }
+    }
+
+    function setFormValues(obj) {
+        let logradouroField = document.getElementsByName("logradouro")[0];
+        let bairroField = document.getElementsByName("bairro")[0];
+        let ufField = document.getElementsByName("uf")[0];
+        let cidadeField = document.getElementsByName("cidade")[0];
+        let complementoField = document.getElementsByName("complemento")[0];
+
+        // Setando valores
+        logradouroField.value = obj.logradouro;
+        bairroField.value = obj.bairro;
+        complementoField.value = obj.complemento;
+        cidadeField.value = obj.localidade;
+        ufField.value = obj.uf;
+    }
+
+    cepField.addEventListener("input", async () => await definirBuscaDeCep())
+</script>
+{% endblock %}

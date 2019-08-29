@@ -1,0 +1,45 @@
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/main.css'%}">
+    <title>Quero internet! - Registrar</title>
+</head>
+
+<body>
+    
+    <h2 class="text-center my-3"> Registrar novo usuário </h2>
+    <hr/>
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="d-flex justify-content-center">
+                                
+                                <button class="btn btn-success align-center ml-3" type="submit">Registrar</button>
+                            </div>
+                            <p class="text-center mt-2">Já tem uma conta? <a href="{% url 'accounts:login' %}"><strong>ENTRE</strong></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+   
+</body>
+
+</html>

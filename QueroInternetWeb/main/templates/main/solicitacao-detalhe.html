@@ -1,0 +1,152 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block content %}
+<div>
+    <h2 class="text-center mb-3 mt-2"> Detalhes </h2>
+    <form method="post">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <table class="table table-responsive sm table-striped">
+                                <tr>
+                                    <th colspan="2">
+                                        <h4>Solicitação</h4>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>N°</td>
+                                    <td>{{object.pk}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tipo de acesso</td>
+                                    <td>{{object.tipo_acesso}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Planos de internet</td>
+                                    <td>
+                                        {{object.planos_internet.all|join:", "}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Velocidades de internet</td>
+                                    <td>
+                                        {{object.velocidades_internet.all|join:", "}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Observações</td>
+                                    <td>
+                                        {{object.observacoes|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CEP</td>
+                                    <td>
+                                        {{object.cep|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Logradouro</td>
+                                    <td>
+                                        {{object.logradouro|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Número</td>
+                                    <td>
+                                        {{object.numero|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Bairro</td>
+                                    <td>
+                                        {{object.bairro|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>UF</td>
+                                    <td>
+                                        {{object.uf|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cidade</td>
+                                    <td>
+                                        {{object.cidade|default:""}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Complemento</td>
+                                    <td>
+                                        {{object.complemento|default:""}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col">
+                            {% if user.is_staff and not object.parceiro_escolhido %}
+                            <div class="row">
+                                <div class="col"><a class="btn btn-info"
+                                        href="{% url 'main:solicitacao-criar-resposta' object.pk %}">
+                                        Responder solicitação
+                                    </a></div>
+                            </div>
+
+                            {% endif %}
+                            <div class="row">
+                                <div class="col">
+                                    {% if object.parceiro_escolhido %}
+                                        <div class="alert alert-success">
+                                            <strong>O parceiro {{object.parceiro_escolhido}} foi escolhido pelo solicitante.</strong>
+                                        </div>
+                                    {% endif %}
+                                    <table class="my-3 table table-responsive table-striped">
+                                        <thead>
+                                            <th>Empresa</th>
+                                            <th>Valor de implantação</th>
+                                            <th>Valor de mensalidade</th>
+                                            <th>Ações</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for resposta in object.respostas.all %}
+                                            <tr>
+                                                <td>{{resposta.usuario.parceiro}}</td>
+                                                <td>R$ {{resposta.valor_implantacao}}</td>
+                                                <td>R$ {{resposta.valor_mensalidade}}</td>
+                                                <td>
+                                                    {% if user.is_staff and user.pk == resposta.usuario.pk %}
+                                                    <a href="{% url 'main:solicitacao-editar-resposta' resposta.pk %}"
+                                                        class="btn btn-sm btn-info m-1">Editar</a>
+                                                    {% endif %}
+                                                    {% if user.is_staff and user.pk == resposta.usuario.pk %}
+                                                    <a href="{% url 'main:solicitacao-excluir-resposta' resposta.pk %}"
+                                                        class="btn btn-sm btn-danger m-1">Excluir</a>
+                                                    {% endif %}
+                                                    {% if not user.is_staff and object.usuario.pk == user.pk and not object.parceiro_escolhido%}
+                                                    <a href="{% url 'main:solicitacao-selecionar-parceiro' object.pk resposta.pk %}"
+                                                        class="btn btn-sm btn-success m-1">Aceitar proposta</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor%}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "main/base.html" %}
+
+{% load staticfiles %}
+{% load bootstrap4 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block content %}
+<div class="">
+    <form method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card my-3">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <h4>Tem certeza de que quer excluir essa resposta?</h4>
+                            <div class="d-flex justify-content-start my-3">
+                                <a class="btn btn-secondary ml-3"
+                                    href="{% url 'main:solicitacao-detalhes' object.solicitacao.pk %}">Não</a>
+                                <button class="btn btn-success align-center ml-3" type="submit">Sim</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

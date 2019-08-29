@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row mt-2">
+        <div class="col">
+            <table class="table table-responsive-sm  table-responsive-md table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Razão social</th>
+                        <th>Nome fantasia</th>
+                        <th>CNPJ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for parceiro in parceiros %}
+                    <tr>
+                        <td>{{parceiro.pk}}</td>
+                        <td>{{parceiro.razao_social}}</td>
+                        <td>{{parceiro.nome_fantasia}}</td>
+                        <td>{{parceiro.cnpj}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <ul class="pagination">
+                {% if parceiros.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">Primeiro</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ parceiros.previous_page_number }}">
+                        &laquo;</a>
+                </li>
+                {% endif %}
+
+                {% for page in num_pages %}
+                <li class="page-item"><a href="?page={{page}}" class="page-link">{{page}}</a></li>
+                {% endfor %}
+
+                {% if parceiros.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ parceiros.next_page_number }}">&raquo;</a>                    
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ parceiros.paginator.num_pages }}">Último</a>
+                </li>                
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
